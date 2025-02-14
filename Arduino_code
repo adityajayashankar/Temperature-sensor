@@ -1,28 +1,29 @@
+// Temperature Sensing using LM35 and Op-Amp
+
 // Define the analog pin connected to the op-amp output
-const int tempPin = A0;
+const int tempPin = A0;  
 
 void setup() {
-    // Start serial communication at 9600 baud
-    Serial.begin(9600);
+    Serial.begin(9600);  // Initialize serial communication at 9600 baud
 }
 
 void loop() {
     // Read the amplified analog value from the op-amp
     int sensorValue = analogRead(tempPin);
-    
-    // Convert the analog value to voltage
+
+    // Convert the analog value to voltage (Arduino ADC: 10-bit resolution)
     float voltage = sensorValue * (5.0 / 1023.0);
-    
-    // Define gain factor based on op-amp setup (adjust accordingly)
-    float gain = 10.0;
-    
-    // Convert voltage to temperature (LM35 gives 10mV per °C)
-    float temperatureC = (voltage / gain) * 100.0;
-    
-    // Print the temperature to the Serial Monitor
+
+    // Define op-amp gain factor (adjust based on circuit configuration)
+    float gain = 10.0;  
+
+    // Convert voltage to temperature in Celsius
+    float temperatureC = (voltage / gain) * 100.0; // LM35: 10mV per °C
+
+    // Display temperature on Serial Monitor
     Serial.print("Temperature: ");
     Serial.print(temperatureC);
     Serial.println(" °C");
 
-    delay(1000); // Wait for 1 second before the next reading
+    delay(1000);  // Wait for 1 second before next reading
 }
